@@ -92,23 +92,21 @@ def player2(x,y):
 #Loop allowing the game to run without closing down
 running = True
 while running:
-    
+    #Background colour
+    screen.fill((0,0,0))
+
+    #Drawing game board
+    borderHorizontal = pygame.draw.rect(screen, (255, 255, 255),(0, 49, 400, 2))
+    borderVertical = pygame.draw.rect(screen, (255, 255, 255),(199, 50, 2, 450))
+
+    #Drawing traffic lights
+    orangeLight = pygame.draw.circle(screen, (255,165,0), (200,25), 15)
+    redLight = pygame.draw.circle(screen, (255, 0, 0), (160, 25), 15)
+    greenLight = pygame.draw.circle(screen, (0, 255, 0), (240, 25), 15)
+
     for event in pygame.event.get():
         if event.type == pygame.QUIT:
             running = False
-
-        #Background colour
-        screen.fill((0,0,0))
-
-        #Drawing game board
-        borderHorizontal = pygame.draw.rect(screen, (255, 255, 255),(0, 49, 400, 2))
-        borderVertical = pygame.draw.rect(screen, (255, 255, 255),(199, 50, 2, 450))
-
-        #Drawing traffic lights
-        orangeLight = pygame.draw.circle(screen, (255,165,0), (200,25), 15)
-        redLight = pygame.draw.circle(screen, (255, 0, 0), (160, 25), 15)
-        greenLight = pygame.draw.circle(screen, (0, 255, 0), (240, 25), 15)
-
 
         # Recognising player 1 key presses
         if event.type == pygame.KEYDOWN:
