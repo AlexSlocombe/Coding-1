@@ -120,8 +120,36 @@ def isCollision4(enemy4X, enemy4Y, player2X, player2Y):
         return False
 
 #Score
-player1Score = 0
-player2Score = 0  
+player1Score_value = 0
+player2Score_value = 0 
+fontScore = pygame.font.Font('EightBitDragon-anqx.ttf', 26) 
+fontWin = pygame.font.Font('EightBitDragon-anqx.ttf', 32) 
+fontRestart = pygame.font.Font('EightBitDragon-anqx.ttf', 16) 
+
+def show_player1Score(x, y):
+    player1Score = fontScore.render(str(player1Score_value), True, (255, 255, 255))
+    screen.blit(player1Score, (x, y))
+
+def show_player2Score(x, y):
+    player2Score = fontScore.render(str(player2Score_value), True, (255, 255, 255))
+    screen.blit(player2Score, (x, y))
+
+#Game over
+def show_gameOver(x, y):
+    gameOver = fontWin.render(str("GAME OVER"), True, (255, 255, 255))
+    screen.blit(gameOver, (x, y))
+
+def show_Restart(x, y):
+    restart = fontRestart.render(str("PRESS R TO RESTART"), True, (255, 255, 255))
+    screen.blit(restart, (x, y))
+
+def show_player1Win(x, y):
+    player1Win = fontWin.render(str("PLAYER 1 WINS!"), True, (255, 255, 255))
+    screen.blit(player1Win, (x, y))
+
+def show_player2Win(x, y):
+    player2Win = fontWin.render(str("Player 2 Wins!"), True, (255, 255, 255))
+    screen.blit(player2Win, (x, y))
 
 #Loop allowing the game to run without closing down
 running = True
@@ -259,7 +287,7 @@ while running:
     elif enemy4X >= winWidth - enemyWidth:
         enemy4X_change = -enemy4X_change
 
-    #Player 1 Collision
+    # Player 1 Collision
     collision1 = isCollision1(enemy1X, enemy1Y, player1X, player1Y)
     if collision1:
         player1X = winWidth/4 - playerWidth/2
@@ -283,11 +311,71 @@ while running:
     if player1Y < 50:
         player1X = winWidth/4 - playerWidth/2
         player1Y = winHeight - 50
-        player1Score += 1
+        player2X = winWidth*0.75 - playerWidth/2
+        player2Y = winHeight - 50
+        player1Score_value += 1
+    
     if player2Y < 50:
         player2X = winWidth*0.75 - playerWidth/2
         player2Y = winHeight - 50
-        player2Score += 1
-        print(player2Score)
+        player1X = winWidth/4 - playerWidth/2
+        player1Y = winHeight - 50
+        player2Score_value += 1
+        
+    #Score
+    show_player1Score(15, 15)
+    show_player2Score(370, 15)
 
+    #Game over
+    if player1Score_value >= 3:
+        show_gameOver(105, 200)
+        show_player1Win(65, 260)
+        show_Restart(110, 320)
+        enemy1X= -35
+        enemy2X= -35
+        enemy3X = -35
+        enemy4X = -35
+        if event.type == pygame.KEYUP:
+            if event.key == pygame.K_r:
+                player1Score_value = 0
+                player2Score_value = 0
+                enemy1X = random.randint(0, 164)
+                enemy1Y = random.randint(100, 200)
+                enemy1X_change = 0.07
+                enemy2X = random.randint(200, 365)
+                enemy2Y = random.randint(100, 200)
+                enemy2X_change = 0.07
+                enemy3X = random.randint(0, 164)
+                enemy3Y = random.randint(250, 350)
+                enemy3X_change = 0.07
+                enemy4X = random.randint(200, 365)
+                enemy4Y = random.randint(250, 350)
+                enemy4X_change = 0.07
+
+                
+    if player2Score_value >= 3:
+        show_gameOver(105, 200)
+        show_player2Win(75, 260)
+        show_Restart(110, 320)
+        enemy1X= -35
+        enemy2X= -35
+        enemy3X = -35
+        enemy4X = -35
+        if event.type == pygame.KEYUP:
+            if event.key == pygame.K_r:
+                player1Score_value = 0
+                player2Score_value = 0
+                enemy1X = random.randint(0, 164)
+                enemy1Y = random.randint(100, 200)
+                enemy1X_change = 0.07
+                enemy2X = random.randint(200, 365)
+                enemy2Y = random.randint(100, 200)
+                enemy2X_change = 0.07
+                enemy3X = random.randint(0, 164)
+                enemy3Y = random.randint(250, 350)
+                enemy3X_change = 0.07
+                enemy4X = random.randint(200, 365)
+                enemy4Y = random.randint(250, 350)
+                enemy4X_change = 0.07
+    
     pygame.display.update()
