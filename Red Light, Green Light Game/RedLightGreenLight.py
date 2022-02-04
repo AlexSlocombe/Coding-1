@@ -42,28 +42,28 @@ enemyHeight = 35
 #Enemy 1 image
 enemy1Img = pygame.image.load('ghost.png')
 enemy1Img = pygame.transform.scale(enemy1Img, (enemyWidth, enemyHeight))
-enemy1X = random.randint(0, 164)
+enemy1X = random.randint(1, 160)
 enemy1Y = random.randint(100, 200)
 enemy1X_change = 0.07
 
 #Enemy 2 image
 enemy2Img = pygame.image.load('ghost.png')
 enemy2Img = pygame.transform.scale(enemy2Img, (enemyWidth, enemyHeight))
-enemy2X = random.randint(200, 365)
+enemy2X = random.randint(201, 360)
 enemy2Y = random.randint(100, 200)
 enemy2X_change = 0.07
 
 #Enemy 3 image
 enemy3Img = pygame.image.load('ghost.png')
 enemy3Img = pygame.transform.scale(enemy2Img, (enemyWidth, enemyHeight))
-enemy3X = random.randint(0, 164)
+enemy3X = random.randint(1, 160)
 enemy3Y = random.randint(250, 350)
 enemy3X_change = 0.07
 
 #Enemy 4 image
 enemy4Img = pygame.image.load('ghost.png')
 enemy4Img = pygame.transform.scale(enemy2Img, (enemyWidth, enemyHeight))
-enemy4X = random.randint(200, 365)
+enemy4X = random.randint(201, 360)
 enemy4Y = random.randint(250, 350)
 enemy4X_change = 0.07
 
@@ -148,11 +148,86 @@ def show_player1Win(x, y):
     screen.blit(player1Win, (x, y))
 
 def show_player2Win(x, y):
-    player2Win = fontWin.render(str("Player 2 Wins!"), True, (255, 255, 255))
+    player2Win = fontWin.render(str("PLAYER 2 WINS!"), True, (255, 255, 255))
     screen.blit(player2Win, (x, y))
 
-#Loop allowing the game to run without closing down
-running = True
+#Start screen
+
+def show_RedLight(x, y):
+    redLight = fontScore.render(str("RED LIGHT, "), True, (255, 0, 0))
+    screen.blit(redLight, (x, y))
+
+def show_GreenLight(x, y):
+    greenLight = fontScore.render(str("GREEN LIGHT"), True, (0, 255, 0))
+    screen.blit(greenLight, (x, y))
+
+def show_instruction1(x, y):
+    instruction1 = fontRestart.render(str("RACE TO THE TOP"), True, (255, 255, 255))
+    screen.blit(instruction1, (x, y))
+
+def show_instruction2(x, y):
+    instruction2 = fontRestart.render(str("DON'T MOVE ON A RED  LIGHT"), True, (255, 255, 255))
+    screen.blit(instruction2, (x, y))
+
+def show_instruction3(x, y):
+    instruction3 = fontRestart.render(str("DON'T TOUCH THE GUARDS"), True, (255, 255, 255))
+    screen.blit(instruction3, (x, y))
+
+def show_instruction4(x, y):
+    instruction4 = fontRestart.render(str("PRESS SPACE TO BEGIN"), True, (255, 255, 255))
+    screen.blit(instruction4, (x, y))
+
+#Loading in key images
+arrowKeysImg = pygame.image.load('ArrowKeys.png')
+arrowKeysImg = pygame.transform.scale(arrowKeysImg, (120, 80))
+
+def arrowKeys(x,y):
+    screen.blit(arrowKeysImg, (x,y))
+
+WASDKeysImg = pygame.image.load('WASDKeys.png')
+WASDKeysImg = pygame.transform.scale(WASDKeysImg, (120, 80))
+
+def WASDKeys(x,y):
+    screen.blit(WASDKeysImg, (x,y))
+
+#Traffic light colours
+brightAmber = (255, 198, 0)
+dimAmber = (85, 66, 0)
+brightRed = (255, 0, 0)
+dimRed = (85 , 0, 0)
+brightGreen = (0, 255, 0)
+dimGreen = (0, 85, 0)
+
+count = 0
+iteration = 1
+if count == 0:
+    iteration += 1
+
+greenTime = random.randint(2,4)
+redTime = greenTime + 1 + random.randint(1,4)
+
+#Start-screen loop
+start = True
+while start:
+    for event in pygame.event.get():
+        if event.type == pygame.QUIT:
+            start = False
+        if event.type == pygame.KEYUP:
+            if event.key == pygame.K_SPACE:
+                start = False
+                running = True
+    show_RedLight(40, 100)
+    show_GreenLight(200, 100)
+    show_instruction1(120, 200)
+    show_instruction2(70, 240)
+    show_instruction3(80, 280)
+    show_instruction4(90, 320)
+    arrowKeys(250, 400)
+    WASDKeys(30, 400)
+
+    pygame.display.update()
+
+#Main game loop
 while running:
     #Background colour
     screen.fill((0,0,0))
@@ -160,32 +235,28 @@ while running:
     #Drawing game board
     borderHorizontal = pygame.draw.rect(screen, (255, 255, 255),(0, 49, 400, 2))
     borderVertical = pygame.draw.rect(screen, (255, 255, 255),(199, 50, 2, 450))
-
-
-    #Traffic light colours
-    orangeR = 0
-    orangeG = 0
-    orangeB = 0
-
-    redR = 0
-    redG = 0
-    redB = 0
-
-    greenR = 0
-    greenG = 0
-    greenB = 0
-
-    # #Changing traffic light colour loop
-    # while True:
-    #     greenR = 0
-    #     greenG = 255
-    #     greenB = 0
-    #     time.sleep(3)
+    
+    #Changing traffic light colours
+    greenColor = brightGreen
+    amberColor = dimAmber
+    redColor = dimRed
+    if count >= greenTime:
+        greenColor = dimGreen
+        amberColor = brightAmber
+        redColor = dimRed
+    if count >= greenTime + 1:
+        greenColor = dimGreen
+        amberColor = dimAmber
+        redColor = brightRed
+    if count >= redTime:
+        count = 0
+        iteration += 1
+    count += 0.0006
 
     #Drawing traffic lights
-    orangeLight = pygame.draw.circle(screen, (255, 165, 0), (200,25), 15)
-    redLight = pygame.draw.circle(screen, (255, 0, 0), (160, 25), 15)
-    greenLight = pygame.draw.circle(screen, (0, 255, 0), (240, 25), 15)
+    amberLight = pygame.draw.circle(screen, amberColor, (200,25), 15)
+    redLight = pygame.draw.circle(screen, redColor, (160, 25), 15)
+    greenLight = pygame.draw.circle(screen, greenColor, (240, 25), 15)
 
     for event in pygame.event.get():
         if event.type == pygame.QUIT:
@@ -307,6 +378,20 @@ while running:
         player2X = winWidth*0.75 - playerWidth/2
         player2Y = winHeight - 50
 
+#Player red-light movement:
+    if redColor == brightRed and player1X_change != 0:
+        player1X = winWidth/4 - playerWidth/2
+        player1Y = winHeight - 50
+    if redColor == brightRed and player1Y_change != 0:
+        player1X = winWidth/4 - playerWidth/2
+        player1Y = winHeight - 50
+    if redColor == brightRed and player2X_change != 0:
+        player2X = winWidth*0.75 - playerWidth/2
+        player2Y = winHeight - 50
+    if redColor == brightRed and player2Y_change != 0:
+        player2X = winWidth*0.75 - playerWidth/2
+        player2Y = winHeight - 50
+
     #Finish line
     if player1Y < 50:
         player1X = winWidth/4 - playerWidth/2
@@ -321,6 +406,8 @@ while running:
         player1X = winWidth/4 - playerWidth/2
         player1Y = winHeight - 50
         player2Score_value += 1
+        greenTime = random.randint(2,4)
+        redTime = greenTime + 1 + random.randint(1,4)
         
     #Score
     show_player1Score(15, 15)
