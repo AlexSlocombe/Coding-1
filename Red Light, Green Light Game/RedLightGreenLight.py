@@ -1,6 +1,9 @@
 #Ghost icon attributed to 'Freepik' via 'flaticon.com'
 
+from contextlib import redirect_stderr
 import random
+import time
+import math
 import pygame
 pygame.init()
 
@@ -41,28 +44,28 @@ enemy1Img = pygame.image.load('ghost.png')
 enemy1Img = pygame.transform.scale(enemy1Img, (enemyWidth, enemyHeight))
 enemy1X = random.randint(0, 164)
 enemy1Y = random.randint(100, 200)
-enemy1X_change = 0.03
+enemy1X_change = 0.07
 
 #Enemy 2 image
 enemy2Img = pygame.image.load('ghost.png')
 enemy2Img = pygame.transform.scale(enemy2Img, (enemyWidth, enemyHeight))
 enemy2X = random.randint(200, 365)
 enemy2Y = random.randint(100, 200)
-enemy2X_change = 0.03
+enemy2X_change = 0.07
 
 #Enemy 3 image
 enemy3Img = pygame.image.load('ghost.png')
 enemy3Img = pygame.transform.scale(enemy2Img, (enemyWidth, enemyHeight))
 enemy3X = random.randint(0, 164)
 enemy3Y = random.randint(250, 350)
-enemy3X_change = 0.03
+enemy3X_change = 0.07
 
 #Enemy 4 image
 enemy4Img = pygame.image.load('ghost.png')
 enemy4Img = pygame.transform.scale(enemy2Img, (enemyWidth, enemyHeight))
 enemy4X = random.randint(200, 365)
 enemy4Y = random.randint(250, 350)
-enemy4X_change = 0.03
+enemy4X_change = 0.07
 
 #Enemy 1 function
 def enemy1(x,y):
@@ -88,6 +91,37 @@ def player1(x,y):
 def player2(x,y):
     screen.blit(player2Img, (x, y))
 
+#Collision detection (Player 1)
+def isCollision1(enemy1X, enemy1Y, player1X, player1Y):
+    distance = math.sqrt((math.pow((enemy1X + 17.5) - (player1X + 5), 2)) + (math.pow((enemy1Y + 17.5) - (player1Y + 5), 2)))
+    if distance < (35*math.sqrt(2))/2:
+        return True
+    else:
+        return False
+def isCollision3(enemy3X, enemy3Y, player1X, player1Y):
+    distance = math.sqrt((math.pow((enemy3X + 17.5) - (player1X + 5), 2)) + (math.pow((enemy3Y + 17.5) - (player1Y + 5), 2)))
+    if distance < (35*math.sqrt(2))/2:
+        return True
+    else:
+        return False
+
+#Collision detection (Player 2)
+def isCollision2(enemy2X, enemy2Y, player2X, player2Y):
+    distance = math.sqrt((math.pow((enemy2X + 17.5) - (player2X + 5), 2)) + (math.pow((enemy2Y + 17.5) - (player2Y + 5), 2)))
+    if distance < (35*math.sqrt(2))/2:
+        return True
+    else:
+        return False
+def isCollision4(enemy4X, enemy4Y, player2X, player2Y):
+    distance = math.sqrt((math.pow((enemy4X + 17.5) - (player2X + 5), 2)) + (math.pow((enemy4Y + 17.5) - (player2Y + 5), 2)))
+    if distance < (35*math.sqrt(2))/2:
+        return True
+    else:
+        return False
+
+#Score
+player1Score = 0
+player2Score = 0  
 
 #Loop allowing the game to run without closing down
 running = True
@@ -99,8 +133,29 @@ while running:
     borderHorizontal = pygame.draw.rect(screen, (255, 255, 255),(0, 49, 400, 2))
     borderVertical = pygame.draw.rect(screen, (255, 255, 255),(199, 50, 2, 450))
 
+
+    #Traffic light colours
+    orangeR = 0
+    orangeG = 0
+    orangeB = 0
+
+    redR = 0
+    redG = 0
+    redB = 0
+
+    greenR = 0
+    greenG = 0
+    greenB = 0
+
+    # #Changing traffic light colour loop
+    # while True:
+    #     greenR = 0
+    #     greenG = 255
+    #     greenB = 0
+    #     time.sleep(3)
+
     #Drawing traffic lights
-    orangeLight = pygame.draw.circle(screen, (255,165,0), (200,25), 15)
+    orangeLight = pygame.draw.circle(screen, (255, 165, 0), (200,25), 15)
     redLight = pygame.draw.circle(screen, (255, 0, 0), (160, 25), 15)
     greenLight = pygame.draw.circle(screen, (0, 255, 0), (240, 25), 15)
 
@@ -203,5 +258,36 @@ while running:
         enemy4X_change = -enemy4X_change
     elif enemy4X >= winWidth - enemyWidth:
         enemy4X_change = -enemy4X_change
+
+    #Player 1 Collision
+    collision1 = isCollision1(enemy1X, enemy1Y, player1X, player1Y)
+    if collision1:
+        player1X = winWidth/4 - playerWidth/2
+        player1Y = winHeight - 50
+    collision3 = isCollision3(enemy3X, enemy3Y, player1X, player1Y)
+    if collision3:
+        player1X = winWidth/4 - playerWidth/2
+        player1Y = winHeight - 50
+    
+    #Player 2 Collision
+    collision2 = isCollision2(enemy2X, enemy2Y, player2X, player2Y)
+    if collision2:
+        player2X = winWidth*0.75 - playerWidth/2
+        player2Y = winHeight - 50
+    collision4 = isCollision4(enemy4X, enemy4Y, player2X, player2Y)
+    if collision4:
+        player2X = winWidth*0.75 - playerWidth/2
+        player2Y = winHeight - 50
+
+    #Finish line
+    if player1Y < 50:
+        player1X = winWidth/4 - playerWidth/2
+        player1Y = winHeight - 50
+        player1Score += 1
+    if player2Y < 50:
+        player2X = winWidth*0.75 - playerWidth/2
+        player2Y = winHeight - 50
+        player2Score += 1
+        print(player2Score)
 
     pygame.display.update()
