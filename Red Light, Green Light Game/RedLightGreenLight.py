@@ -1,16 +1,21 @@
 #Ghost icon attributed to 'Freepik' via 'flaticon.com'
+#8 Bit Music (loop) by Alexander Blu via 'orangefreesounds.com/8-bit-music-loop/'
 
 from contextlib import redirect_stderr
 import random
-import time
 import math
 import pygame
+from pygame import mixer
 pygame.init()
 
 #Creating game screen
 winWidth = 400
 winHeight = 500
 screen = pygame.display.set_mode((winWidth, winHeight))
+
+#Loading music
+mixer.music.load('8-bit-music-loop.mp3')
+mixer.music.play(-1)
 
 # Title and Icon
 pygame.display.set_caption("Red Light, Green Light")
@@ -199,12 +204,10 @@ brightGreen = (0, 255, 0)
 dimGreen = (0, 85, 0)
 
 count = 0
-iteration = 1
-if count == 0:
-    iteration += 1
+iteration = 0
 
-greenTime = random.randint(2,4)
-redTime = greenTime + 1 + random.randint(1,4)
+greenTime = random.randint(1, 5)
+redTime = greenTime + 1 + random.randint(1, 6)
 
 #Start-screen loop
 start = True
@@ -251,7 +254,15 @@ while running:
     if count >= redTime:
         count = 0
         iteration += 1
+        greenTime = random.randint(1,5)
+        redTime = greenTime + 1 + random.randint(1,6)
     count += 0.0006
+    
+    #Pausing and playing music
+    if redColor == brightRed:
+        pygame.mixer.music.set_volume(0.2)
+    else:
+        pygame.mixer.music.set_volume(1)
 
     #Drawing traffic lights
     amberLight = pygame.draw.circle(screen, amberColor, (200,25), 15)
@@ -399,6 +410,14 @@ while running:
         player2X = winWidth*0.75 - playerWidth/2
         player2Y = winHeight - 50
         player1Score_value += 1
+        enemy1X = random.randint(1, 160)
+        enemy1Y = random.randint(100, 200)
+        enemy2X = random.randint(201, 360)
+        enemy2Y = random.randint(100, 200)
+        enemy3X = random.randint(1, 160)
+        enemy3Y = random.randint(250, 350)
+        enemy4X = random.randint(201, 360)
+        enemy4Y = random.randint(250, 350)
     
     if player2Y < 50:
         player2X = winWidth*0.75 - playerWidth/2
@@ -408,6 +427,14 @@ while running:
         player2Score_value += 1
         greenTime = random.randint(2,4)
         redTime = greenTime + 1 + random.randint(1,4)
+        enemy1X = random.randint(1, 160)
+        enemy1Y = random.randint(100, 200)
+        enemy2X = random.randint(201, 360)
+        enemy2Y = random.randint(100, 200)
+        enemy3X = random.randint(1, 160)
+        enemy3Y = random.randint(250, 350)
+        enemy4X = random.randint(201, 360)
+        enemy4Y = random.randint(250, 350)
         
     #Score
     show_player1Score(15, 15)
