@@ -47,28 +47,28 @@ enemyHeight = 35
 #Enemy 1 image
 enemy1Img = pygame.image.load('ghost.png')
 enemy1Img = pygame.transform.scale(enemy1Img, (enemyWidth, enemyHeight))
-enemy1X = random.randint(1, 160)
+enemy1X = random.randint(5, 160)
 enemy1Y = random.randint(100, 200)
 enemy1X_change = 0.07
 
 #Enemy 2 image
 enemy2Img = pygame.image.load('ghost.png')
 enemy2Img = pygame.transform.scale(enemy2Img, (enemyWidth, enemyHeight))
-enemy2X = random.randint(201, 360)
+enemy2X = random.randint(205, 360)
 enemy2Y = random.randint(100, 200)
 enemy2X_change = 0.07
 
 #Enemy 3 image
 enemy3Img = pygame.image.load('ghost.png')
 enemy3Img = pygame.transform.scale(enemy2Img, (enemyWidth, enemyHeight))
-enemy3X = random.randint(1, 160)
+enemy3X = random.randint(5, 160)
 enemy3Y = random.randint(250, 350)
 enemy3X_change = 0.07
 
 #Enemy 4 image
 enemy4Img = pygame.image.load('ghost.png')
 enemy4Img = pygame.transform.scale(enemy2Img, (enemyWidth, enemyHeight))
-enemy4X = random.randint(201, 360)
+enemy4X = random.randint(205, 360)
 enemy4Y = random.randint(250, 350)
 enemy4X_change = 0.07
 
@@ -204,7 +204,6 @@ brightGreen = (0, 255, 0)
 dimGreen = (0, 85, 0)
 
 count = 0
-iteration = 0
 
 greenTime = random.randint(1, 6)
 redTime = greenTime + 1 + random.randint(1, 6)
@@ -253,7 +252,6 @@ while running:
         redColor = brightRed
     if count >= redTime:
         count = 0
-        iteration += 1
         greenTime = random.randint(1,6)
         redTime = greenTime + 1 + random.randint(1,6)
     count += 0.0006
