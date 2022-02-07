@@ -206,7 +206,7 @@ dimGreen = (0, 85, 0)
 count = 0
 iteration = 0
 
-greenTime = random.randint(1, 5)
+greenTime = random.randint(1, 6)
 redTime = greenTime + 1 + random.randint(1, 6)
 
 #Start-screen loop
@@ -254,7 +254,7 @@ while running:
     if count >= redTime:
         count = 0
         iteration += 1
-        greenTime = random.randint(1,5)
+        greenTime = random.randint(1,6)
         redTime = greenTime + 1 + random.randint(1,6)
     count += 0.0006
     
