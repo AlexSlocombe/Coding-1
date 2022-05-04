@@ -256,7 +256,7 @@ while running:
         redTime = greenTime + 1 + random.randint(1,6)
     count += 0.0006
     
-    #Pausing and playing music
+    #Lowering and raising volume of music
     if redColor == brightRed:
         pygame.mixer.music.set_volume(0.2)
     else:

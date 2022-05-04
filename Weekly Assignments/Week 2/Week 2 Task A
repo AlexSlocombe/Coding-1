@@ -1,0 +1,13 @@
+""" Given 3 positive integers, find the sum of all numbers between the first two that are a 
+multiple of the third. eg. Given "1, 10, 2", the expected output is "20". """
+
+a = int(input("Enter an integer: "))
+b = int(input("Enter an integer: "))
+c = int(input("Enter an integer: "))
+d = 0
+
+for i in range(a, b):
+    if(i % c)==0:
+        d = d + i
+
+print(d) 

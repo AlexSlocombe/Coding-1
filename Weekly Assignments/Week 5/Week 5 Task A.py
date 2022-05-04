@@ -22,22 +22,3 @@ for i in set_n:
             print(alpha, end = " ")
 
 
-
-""" Implement a Caesar Cipher function that takes a string and shift 
-amount, outputs the encrypted string. """
-
-# I could not complete this
-
-""" try:
-    txt = str(input("Enter some text: "))
-    shift = int(input("Enter the decryption shift: "))
-except ValueError as e:
-    print("That was not a valid entry. Enter a string for text or an integer for the decryption shift.")
-
-for i in txt:
-    if i == " ":
-        break
-    else: """
-
-letters = 'abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ'
-

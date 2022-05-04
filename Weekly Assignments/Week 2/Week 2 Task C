@@ -1,0 +1,13 @@
+""" Implement division as a series of subtraction. 
+The program should only deal with integers and report the remainder if there is one. 
+eg. 10/2 => 10-2-2-2-2-2=0, 10 minus 2 five times so the division result is 5 with a remainder of 0 """
+
+a = int(input("Enter an integer: "))
+b = int(input("Enter an integer: "))
+index = 0
+
+while a - b >= 0:
+    a = a - b
+    index += 1
+
+print(index, "remainder", a)

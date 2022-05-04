@@ -1,0 +1,14 @@
+# I struggled with this question, and couldn't find a solution
+    
+text = str(input("Enter text: "))
+text = text.lower()
+alphabet = "abcdefghijklmnopqrstuvwxyz"
+print(text)
+
+for i in alphabet:
+    count = 0
+    for j in input:
+        if i == j:
+            count = count + 1
+
+print(i + ": " + str(count))
